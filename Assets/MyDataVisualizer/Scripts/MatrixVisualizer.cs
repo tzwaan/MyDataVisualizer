@@ -18,6 +18,7 @@ public class MatrixVisualizer : MonoBehaviour
             return _dataSource;
         }
     }
+    private bool initialized = false;
 
     View currentView;
     ViewBuilder vb;
@@ -28,6 +29,11 @@ public class MatrixVisualizer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Init();
+    }
+
+    public void Init() {
+        if (initialized) return;
         columns = new List<string>();
         mt = IATKUtil.GetMaterialFromTopology(
             AbstractVisualisation.GeometryType.Arrows);
@@ -40,6 +46,7 @@ public class MatrixVisualizer : MonoBehaviour
                 new GradientColorKey(Color.red, 1),
             }
         };
+        initialized = true;
     }
 
     public void setDataSource(CSVDataSource source) {

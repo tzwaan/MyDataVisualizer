@@ -13,6 +13,8 @@ public class DataSelector : MonoBehaviour
     public MatrixVisualizer matrixVisualizerPrefab;
     bool menuState = false;
 
+    private string defaultDataSet = "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\MyDataVisualizer\\Datasets\\random\\export_10000.csv";
+
     public TextAsset dataFile;
     public CSVDataSource dataSource;
 
@@ -22,6 +24,8 @@ public class DataSelector : MonoBehaviour
         FileBrowser.HideDialog();
         FileBrowser.SetFilters(false, new FileBrowser.Filter("Data Files", ".csv"));
         FileBrowser.SetDefaultFilter(".csv");
+
+        loadFile(new string[] {defaultDataSet});
     }
 
     void OnEnable() {
@@ -38,7 +42,7 @@ public class DataSelector : MonoBehaviour
             hideMenu,
             FileBrowser.PickMode.Files,
             false,
-            "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\IATK\\Datasets",
+            "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\MyDataVisualizer\\Datasets",
             null,
             "Select CSV Datafile",
             "Select");
@@ -55,7 +59,7 @@ public class DataSelector : MonoBehaviour
         print(path);
         Application.OpenURL(path);
         dataFile = new TextAsset(FileBrowserHelpers.ReadTextFromFile(path));
-        print(dataFile);
+        //print(dataFile);
         dataSource = createCSVDataSource(dataFile.text);
 
         var visualizer = Instantiate(matrixVisualizerPrefab);
@@ -68,6 +72,7 @@ public class DataSelector : MonoBehaviour
 
         selectionMatrix.transform.SetParent(visualization.transform);
         visualizer.transform.SetParent(visualization.transform);
+        visualizer.Init();
 
         visualizer.setDataSource(dataSource);
         
