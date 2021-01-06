@@ -8,6 +8,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
 using VRTK;
+using MyDataVisualizer;
 #if ENABLE_VR
 using UnityEngine.XR;
 #endif

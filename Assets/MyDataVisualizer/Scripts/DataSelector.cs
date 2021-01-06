@@ -5,94 +5,98 @@ using SimpleFileBrowser;
 using VRTK;
 using IATK;
 
-public class DataSelector : MonoBehaviour
+namespace MyDataVisualizer
 {
-    public VRTK_ControllerEvents controllerEvents;
-    public GameObject menu;
-    public SelectionMatrix selectionMatrixPrefab;
-    public MatrixVisualizer matrixVisualizerPrefab;
-    bool menuState = false;
 
-    private string defaultDataSet = "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\MyDataVisualizer\\Datasets\\random\\export_10000.csv";
-
-    public TextAsset dataFile;
-    public CSVDataSource dataSource;
-
-    // Start is called before the first frame update
-    void Start()
+    public class DataSelector : MonoBehaviour
     {
-        FileBrowser.HideDialog();
-        FileBrowser.SetFilters(false, new FileBrowser.Filter("Data Files", ".csv"));
-        FileBrowser.SetDefaultFilter(".csv");
+        public VRTK_ControllerEvents controllerEvents;
+        public GameObject menu;
+        public SelectionMatrix selectionMatrixPrefab;
+        public MatrixVisualizer matrixVisualizerPrefab;
+        bool menuState = false;
 
-        loadFile(new string[] {defaultDataSet});
-    }
+        private string defaultDataSet = "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\MyDataVisualizer\\Datasets\\random\\export_10000.csv";
 
-    void OnEnable() {
-        controllerEvents.ButtonTwoReleased += toggleMenu;
-    }
-    void OnDisable() {
-        controllerEvents.ButtonTwoReleased -= toggleMenu;
-    }
+        public TextAsset dataFile;
+        public CSVDataSource dataSource;
 
-    private void showMenu() {
-        gameObject.GetComponent<VRTK_TransformFollow>().enabled = false;
-        FileBrowser.ShowLoadDialog(
-            loadFile,
-            hideMenu,
-            FileBrowser.PickMode.Files,
-            false,
-            "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\MyDataVisualizer\\Datasets",
-            null,
-            "Select CSV Datafile",
-            "Select");
-    }
+        // Start is called before the first frame update
+        void Start()
+        {
+            FileBrowser.HideDialog();
+            FileBrowser.SetFilters(false, new FileBrowser.Filter("Data Files", ".csv"));
+            FileBrowser.SetDefaultFilter(".csv");
 
-    private void hideMenu() {
-        gameObject.GetComponent<VRTK_TransformFollow>().enabled = true;
-        FileBrowser.HideDialog();
-    }
+            loadFile(new string[] {defaultDataSet});
+        }
 
-    private void loadFile(string[] paths) {
-        string path = paths[0];
-        print("Loading File");
-        print(path);
-        Application.OpenURL(path);
-        dataFile = new TextAsset(FileBrowserHelpers.ReadTextFromFile(path));
-        //print(dataFile);
-        dataSource = createCSVDataSource(dataFile.text);
+        void OnEnable() {
+            controllerEvents.ButtonTwoReleased += toggleMenu;
+        }
+        void OnDisable() {
+            controllerEvents.ButtonTwoReleased -= toggleMenu;
+        }
 
-        var visualizer = Instantiate(matrixVisualizerPrefab);
-        var selectionMatrix = Instantiate(selectionMatrixPrefab);
+        private void showMenu() {
+            gameObject.GetComponent<VRTK_TransformFollow>().enabled = false;
+            FileBrowser.ShowLoadDialog(
+                loadFile,
+                hideMenu,
+                FileBrowser.PickMode.Files,
+                false,
+                "C:\\Users\\tijme\\Unity Projects\\IATK-master\\Assets\\MyDataVisualizer\\Datasets",
+                null,
+                "Select CSV Datafile",
+                "Select");
+        }
 
-        GameObject visualization = new GameObject("Visualization");
+        private void hideMenu() {
+            gameObject.GetComponent<VRTK_TransformFollow>().enabled = true;
+            FileBrowser.HideDialog();
+        }
 
-        selectionMatrix.visualizer = visualizer;
-        visualizer.selectionMatrix = selectionMatrix;
+        private void loadFile(string[] paths) {
+            string path = paths[0];
+            print("Loading File");
+            print(path);
+            Application.OpenURL(path);
+            dataFile = new TextAsset(FileBrowserHelpers.ReadTextFromFile(path));
+            //print(dataFile);
+            dataSource = createCSVDataSource(dataFile.text);
 
-        selectionMatrix.transform.SetParent(visualization.transform);
-        visualizer.transform.SetParent(visualization.transform);
-        visualizer.Init();
+            var visualizer = Instantiate(matrixVisualizerPrefab);
+            var selectionMatrix = Instantiate(selectionMatrixPrefab);
 
-        visualizer.setDataSource(dataSource);
-        
-    }
+            GameObject visualization = new GameObject("Visualization");
 
-    CSVDataSource createCSVDataSource(string data) {
-        CSVDataSource source;
-        source = gameObject.AddComponent<CSVDataSource>();
-        source.load(data, null);
-        return source;
-    }
+            selectionMatrix.visualizer = visualizer;
+            visualizer.selectionMatrix = selectionMatrix;
 
-    private void toggleMenu(object sender, ControllerInteractionEventArgs eventArgs) {
-        print("Toggling file dialog");
-        menuState = !menuState;
-        print(menuState);
-        if (menuState) {
-            showMenu();
-        } else {
-            hideMenu();
+            selectionMatrix.transform.SetParent(visualization.transform);
+            visualizer.transform.SetParent(visualization.transform);
+            visualizer.Init();
+
+            visualizer.setDataSource(dataSource);
+            
+        }
+
+        CSVDataSource createCSVDataSource(string data) {
+            CSVDataSource source;
+            source = gameObject.AddComponent<CSVDataSource>();
+            source.load(data, null);
+            return source;
+        }
+
+        private void toggleMenu(object sender, ControllerInteractionEventArgs eventArgs) {
+            print("Toggling file dialog");
+            menuState = !menuState;
+            print(menuState);
+            if (menuState) {
+                showMenu();
+            } else {
+                hideMenu();
+            }
         }
     }
 }

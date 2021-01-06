@@ -2,8 +2,8 @@
     "name": "NewAssembly",
     "references": [
         "GUID:8fa756b17bedbcd4ea8a0d608c3c1c6e",
-        "GUID:c685d05731421f64287ad6d13be5af0e",
-        "GUID:141a273516c6adb4182383b8b35464a7"
+        "GUID:141a273516c6adb4182383b8b35464a7",
+        "GUID:c685d05731421f64287ad6d13be5af0e"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

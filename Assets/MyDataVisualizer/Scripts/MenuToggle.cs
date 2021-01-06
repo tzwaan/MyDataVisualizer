@@ -1,25 +1,29 @@
 ﻿using UnityEngine;
 using VRTK;
 
-public class MenuToggle : MonoBehaviour
+namespace MyDataVisualizer
 {
-    public VRTK_ControllerEvents controllerEvents;
-    public GameObject menu;
-    bool menuState = false;
 
-    void OnEnable() 
+    public class MenuToggle : MonoBehaviour
     {
-        controllerEvents.ButtonTwoReleased += toggleMenu;
-    }
+        public VRTK_ControllerEvents controllerEvents;
+        public GameObject menu;
+        bool menuState = false;
 
-    void OnDisable()
-    {
-        controllerEvents.ButtonTwoReleased -= toggleMenu;
-    }
+        void OnEnable() 
+        {
+            controllerEvents.ButtonTwoReleased += toggleMenu;
+        }
 
-    private void toggleMenu(object sender, ControllerInteractionEventArgs eventArgs)
-    {
-        menuState = !menuState;
-        menu.SetActive(menuState);
+        void OnDisable()
+        {
+            controllerEvents.ButtonTwoReleased -= toggleMenu;
+        }
+
+        private void toggleMenu(object sender, ControllerInteractionEventArgs eventArgs)
+        {
+            menuState = !menuState;
+            menu.SetActive(menuState);
+        }
     }
 }
