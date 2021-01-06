@@ -7,7 +7,7 @@ using Unity.PerformanceTesting;
 using UnityEditor.SceneManagement;
 using UnityEngine.TestTools;
 using UnityEngine.SceneManagement;
-// using VRTK;
+using VRTK;
 #if ENABLE_VR
 using UnityEngine.XR;
 #endif
@@ -68,7 +68,7 @@ namespace Tests
                 if (SceneObjects == null) {
                     throw new MissingComponentException();
                 } else {
-                    //SceneObjects.GetComponentInChildren<DataSelector>();
+                    SceneObjects.GetComponentInChildren<DataSelector>();
                     var camera = Camera.main;
                 }
             }
@@ -108,7 +108,7 @@ namespace Tests
                 if (SceneObjects == null) {
                     throw new MissingComponentException();
                 } else {
-                    //SceneObjects.GetComponentInChildren<DataSelector>();
+                    SceneObjects.GetComponentInChildren<DataSelector>();
                     var camera = Camera.main;
                 }
             }

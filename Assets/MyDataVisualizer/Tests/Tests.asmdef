@@ -3,7 +3,9 @@
     "references": [
         "Unity.PerformanceTesting",
         "UnityEngine.TestRunner",
-        "UnityEditor.TestRunner"
+        "UnityEditor.TestRunner",
+        "VRTKAssembly",
+        "NewAssembly"
     ],
     "includePlatforms": [
         "Editor",
