@@ -28,6 +28,10 @@ namespace MyDataVisualizer
             }
         }
 
+        public void CloseVisualization() {
+            Destroy(transform.parent.gameObject);
+        }
+
         void clickButton(int row, MatrixVisualizer.VIEW_DIMENSION dimension) {
             List<Button> column = buttons[(int)dimension];
             Button button = column[row];
@@ -76,6 +80,21 @@ namespace MyDataVisualizer
                     buttonWidth * i, 0,  0);
                 i++;
             }
+
+            buttonPrefab.GetComponent<RectTransform>().sizeDelta = 
+                new Vector2(
+                    buttonWidth - buttonWidth/4,
+                    buttonHeight - buttonHeight/4);
+
+            var close_button = Instantiate(buttonPrefab);
+            close_button.transform.SetParent(canvas.transform, false);
+            close_button.GetComponentInChildren<Text>().text = "Remove visualization";
+            close_button.GetComponent<RectTransform>().localPosition = topRight;
+
+            close_button.onClick.AddListener(CloseVisualization);
+
+            close_button.gameObject.SetActive(true);
+
         }
 
         public Vector3 topLeft {
@@ -83,6 +102,12 @@ namespace MyDataVisualizer
                 return new Vector3(
                 -width / 2 + buttonWidth / 2,
                 height / 2 - buttonHeight / 2);
+            }
+        }
+
+        public Vector3 topRight {
+            get {
+                return topLeft + new Vector3(width, 0f);
             }
         }
 

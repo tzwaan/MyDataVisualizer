@@ -21,6 +21,8 @@ namespace MyDataVisualizer
         public TextAsset dataFile;
         public CSVDataSource dataSource;
 
+        public bool loadDefault = false;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -28,7 +30,9 @@ namespace MyDataVisualizer
             FileBrowser.SetFilters(false, new FileBrowser.Filter("Data Files", ".csv"));
             FileBrowser.SetDefaultFilter(".csv");
 
-            loadFile(new string[] {defaultDataSet});
+            if (loadDefault) {
+                loadFile(new string[] {defaultDataSet});
+            }
         }
 
         void OnEnable() {
@@ -41,7 +45,7 @@ namespace MyDataVisualizer
         private void showMenu() {
             gameObject.GetComponent<VRTK_TransformFollow>().enabled = false;
             FileBrowser.ShowLoadDialog(
-                loadFile,
+                loadFileCallback,
                 hideMenu,
                 FileBrowser.PickMode.Files,
                 false,
@@ -56,11 +60,16 @@ namespace MyDataVisualizer
             FileBrowser.HideDialog();
         }
 
-        private void loadFile(string[] paths) {
+        private void loadFileCallback(string [] paths) {
+            var selectionMatrix = loadFile(paths);
+        }
+
+        public SelectionMatrix loadFile(string[] paths) {
             string path = paths[0];
             print("Loading File");
             print(path);
             Application.OpenURL(path);
+            var fileName = FileBrowserHelpers.GetFilename(path);
             dataFile = new TextAsset(FileBrowserHelpers.ReadTextFromFile(path));
             //print(dataFile);
             dataSource = createCSVDataSource(dataFile.text);
@@ -75,10 +84,11 @@ namespace MyDataVisualizer
 
             selectionMatrix.transform.SetParent(visualization.transform);
             visualizer.transform.SetParent(visualization.transform);
-            visualizer.Init();
+            visualizer.Init(fileName);
 
             visualizer.setDataSource(dataSource);
-            
+
+            return selectionMatrix;
         }
 
         CSVDataSource createCSVDataSource(string data) {

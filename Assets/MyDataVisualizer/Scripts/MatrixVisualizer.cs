@@ -23,6 +23,10 @@ namespace MyDataVisualizer
             }
         }
         private bool initialized = false;
+        private string _name;
+        public string visualizer_name {
+            get => _name;
+        }
 
         View currentView;
         ViewBuilder vb;
@@ -33,11 +37,15 @@ namespace MyDataVisualizer
         // Start is called before the first frame update
         void Start()
         {
-            Init();
         }
 
-        public void Init() {
+        public Vector3 CenterPosition {
+            get => currentView.gameObject.transform.position;
+        }
+
+        public void Init(string filename) {
             if (initialized) return;
+            _name = filename;
             columns = new List<string>();
             mt = IATKUtil.GetMaterialFromTopology(
                 AbstractVisualisation.GeometryType.Arrows);
@@ -46,7 +54,7 @@ namespace MyDataVisualizer
             g = new Gradient {
                 colorKeys = new GradientColorKey[] {
                     new GradientColorKey(Color.blue, 0),
-                    new GradientColorKey(Color.green, 1/2),
+                    new GradientColorKey(Color.green, 0.5f),
                     new GradientColorKey(Color.red, 1),
                 }
             };
@@ -110,7 +118,7 @@ namespace MyDataVisualizer
         ViewBuilder CreateViewBuilder() {
             var viewBuilder = new ViewBuilder(
                 MeshTopology.Points,
-                "Main visualization"
+                visualizer_name
             ).initialiseDataView(dataSource.DataCount);
             return viewBuilder;
         }
