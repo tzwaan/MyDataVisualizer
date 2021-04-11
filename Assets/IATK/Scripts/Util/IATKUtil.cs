@@ -48,6 +48,10 @@ namespace IATK
                     mt = new Material(Shader.Find("Custom/VectorShader"));
                     mt.renderQueue = 3000;
                     return mt;
+                case AbstractVisualisation.GeometryType.Shape:
+                    mt = new Material(Shader.Find("Custom/ShapeShader"));
+                    mt.renderQueue = 3000;
+                    return mt;
                 case AbstractVisualisation.GeometryType.Bars:
                     mt = new Material(Shader.Find("IATK/BarShader"));
                     mt.renderQueue = 3000;

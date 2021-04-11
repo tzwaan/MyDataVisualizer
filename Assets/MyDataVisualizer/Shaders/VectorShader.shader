@@ -1,4 +1,4 @@
-﻿Shader "Custom/VectorShader"
+Shader "Custom/VectorShader"
 {
 	Properties 
 	{

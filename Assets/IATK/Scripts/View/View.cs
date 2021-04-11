@@ -67,6 +67,15 @@ namespace IATK
         }
 
         /// <summary>
+        /// Maps a data array to the shape of the glyphs
+        /// </summary>
+        /// <param name="shapeData"></param>
+        public void SetShapeChannel(float[] shapeData)
+        {
+            bigMesh.MapUVChannel(0, (int)AbstractVisualisation.NormalChannel.Shape, shapeData);
+        }
+
+        /// <summary>
         /// Sets the filter chanel
         /// </summary>
         /// <param name="filteredData"></param>
@@ -118,6 +127,11 @@ namespace IATK
         public void SetSize(float size)
         {
             bigMesh.SharedMaterial.SetFloat("_Size", size);
+        }
+
+        public void SetShape(float shape)
+        {
+            bigMesh.SharedMaterial.SetFloat("_Shape", shape);
         }
 
         /// <summary>

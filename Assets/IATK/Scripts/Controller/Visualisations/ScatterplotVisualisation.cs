@@ -95,6 +95,7 @@ namespace IATK
                 for (int i = 0; i < viewList.Count; i++)
                 {
                     viewList[i].SetSize(visualisationReference.size);
+                    viewList[i].SetShape(visualisationReference.shape);
                     viewList[i].SetMinSize(visualisationReference.minSize);
                     viewList[i].SetMaxSize(visualisationReference.maxSize);
 
@@ -119,6 +120,13 @@ namespace IATK
                 for (int i = 0; i < viewList.Count; i++)
                 {
                     viewList[i].SetSizeChannel(visualisationReference.dataSource[visualisationReference.sizeDimension].Data);
+                }
+            }
+            if (viewList.Count > 0 && visualisationReference.shapeDimension != "Undefined")
+            {
+                for (int i = 0; i< viewList.Count; i++)
+                {
+                    viewList[i].SetShapeChannel(visualisationReference.dataSource[visualisationReference.shapeDimension].Data);
                 }
             }
 
@@ -244,6 +252,22 @@ namespace IATK
                             break;
 
                         }
+                    case AbstractVisualisation.PropertyType.Shape:
+                        {
+                            for (int i = 0; i < viewList.Count; i++)
+                            {
+                                if (visualisationReference.sizeDimension != "Undefined")
+                                {
+                                    viewList[i].SetShapeChannel(visualisationReference.dataSource[visualisationReference.shapeDimension].Data);
+                                }
+                                else
+                                {
+                                    viewList[i].SetShapeChannel(new float[visualisationReference.dataSource.DataCount]);
+                                }
+                            }
+                            creationConfiguration.ShapeDimension = visualisationReference.shapeDimension;
+                            break;
+                        }
                     case PropertyType.SizeValues:
                         for (int i = 0; i < viewList.Count; i++)
                         {
@@ -255,6 +279,12 @@ namespace IATK
                         creationConfiguration.MinSize = visualisationReference.minSize;
                         creationConfiguration.MaxSize = visualisationReference.maxSize;
 
+                        break;
+                    case PropertyType.ShapeValues:
+                        for (int i = 0; i < viewList.Count; i++)
+                        {
+                            viewList[i].SetShape(visualisationReference.shape);
+                        }
                         break;
                     case AbstractVisualisation.PropertyType.LinkingDimension:
                         creationConfiguration.LinkingDimension = visualisationReference.linkingDimension;

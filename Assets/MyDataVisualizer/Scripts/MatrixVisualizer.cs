@@ -11,7 +11,7 @@ namespace MyDataVisualizer
 
     public class MatrixVisualizer : MonoBehaviour
     {
-        public enum VIEW_DIMENSION { X, Y, Z, COLOR, SIZE };
+        public enum VIEW_DIMENSION { X, Y, Z, COLOR, SIZE, SHAPE };
         public SelectionMatrix selectionMatrix;
         public GameObject x_axis;
         public GameObject y_axis;
@@ -39,18 +39,19 @@ namespace MyDataVisualizer
         {
         }
 
-        public Vector3 CenterPosition {
-            get => currentView.gameObject.transform.position;
+        public Transform ViewTransform {
+            get => currentView.gameObject.transform;
         }
 
+        public Vector3 CenterPosition {
+            get => currentView.gameObject.transform.position + new Vector3(0.5f, 0.5f, 0.5f);
+        } 
+ 
         public void Init(string filename) {
             if (initialized) return;
             _name = filename;
             columns = new List<string>();
-            mt = IATKUtil.GetMaterialFromTopology(
-                AbstractVisualisation.GeometryType.Arrows);
-            mt.SetFloat("_MinSize", 0.01f);
-            mt.SetFloat("_MaxSize", 0.5f);
+            SetGeometryType(AbstractVisualisation.GeometryType.Points);
             g = new Gradient {
                 colorKeys = new GradientColorKey[] {
                     new GradientColorKey(Color.blue, 0),
@@ -59,6 +60,13 @@ namespace MyDataVisualizer
                 }
             };
             initialized = true;
+        }
+
+        public void SetGeometryType(AbstractVisualisation.GeometryType type)
+        {
+            mt = IATKUtil.GetMaterialFromTopology(type);
+            mt.SetFloat("_MinSize", 0.01f);
+            mt.SetFloat("_MaxSize", 0.5f);
         }
 
         public void setDataSource(CSVDataSource source) {
@@ -104,6 +112,40 @@ namespace MyDataVisualizer
                         dataSource[column].Data
                     );
                     break;
+                case VIEW_DIMENSION.SHAPE:
+                    vb = vb.setShape(
+                        dataSource[column].Data
+                    );
+                    SetGeometryType(AbstractVisualisation.GeometryType.Shape);
+                    break;
+                default:
+                    throw new System.NotImplementedException();
+            }
+            UpdateView();
+        }
+
+        public void resetViewDimension(VIEW_DIMENSION dimension) {
+            switch(dimension) {
+                case VIEW_DIMENSION.X:
+                    vb = vb.resetDataDimension(ViewBuilder.VIEW_DIMENSION.X);
+                    break;
+                case VIEW_DIMENSION.Y:
+                    vb = vb.resetDataDimension(ViewBuilder.VIEW_DIMENSION.Y);
+                    break;
+                case VIEW_DIMENSION.Z:
+                    vb = vb.resetDataDimension(ViewBuilder.VIEW_DIMENSION.Z);
+                    break;
+                case VIEW_DIMENSION.COLOR:
+                    vb = vb.resetColors();
+                    break;
+                case VIEW_DIMENSION.SIZE:
+                    vb = vb.resetSize();
+                    break;
+                case VIEW_DIMENSION.SHAPE:
+                    vb = vb.resetShape();
+                    SetGeometryType(AbstractVisualisation.GeometryType.Points);
+                    break;
+
                 default:
                     throw new System.NotImplementedException();
             }

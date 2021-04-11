@@ -27,6 +27,7 @@ namespace IATK {
 
         public string ColourDimension;                                  // Colour mapped to a dimension
         public string SizeDimension;                                    // Size mapped to a dimension
+        public string ShapeDimension;
         public string LinkingDimension;                                 // The linking dimension to draw links between points
         public Gradient colourKeys;                                     // The gradient colormapping
         public Color colour;                                            // The colour mapping
@@ -72,6 +73,7 @@ namespace IATK {
 
             ColourDimension = cf.ColourDimension;
             SizeDimension = cf.SizeDimension;
+            ShapeDimension = cf.ShapeDimension;
             LinkingDimension = cf.LinkingDimension;
 
             colourKeys = cf.colourKeys;
@@ -126,6 +128,7 @@ namespace IATK {
             }
             cf.ColourDimension = scc.ColourDimension;
             cf.SizeDimension = scc.SizeDimension;
+            cf.ShapeDimension = scc.ShapeDimension;
             cf.LinkingDimension = scc.LinkingDimension;
             cf.colourKeys = scc.colourKeys;
             cf.colour = scc.colour;
@@ -155,6 +158,7 @@ namespace IATK {
         public Dictionary<Axis, string> Axies { get; set; }             // The desired axies
         public string ColourDimension { get; set; }                     // Colour mapped to a dimension
         public string SizeDimension { get; set; }                       // Size mapped to a dimension
+        public string ShapeDimension { get; set; }
         public string LinkingDimension { get; set; }                    // The linking dimension to draw links between points
         public Gradient colourKeys { get; set; }                        // The colormapping
         public Color colour = Color.white;                              // The colour mapping
@@ -222,6 +226,7 @@ namespace IATK {
         {
             ColourDimension = colourDimension;
             SizeDimension = SizeDimension;
+            ShapeDimension = ShapeDimension;
         }
     }
 }

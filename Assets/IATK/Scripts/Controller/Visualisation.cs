@@ -30,6 +30,10 @@ namespace IATK
         [Range(0.0f, 1.0f)]
         public float size = 0.3f;
 
+        [Tooltip("The shape of the geometry from cube to sphere")]
+        [Range(0.0f, 1.0f)]
+        public float shape = 0.5f;
+
         [Tooltip("The minimum size of the geometry")]
         [Range(0.0f, 1.0f)]
         public float minSize = 0.01f;
@@ -79,6 +83,9 @@ namespace IATK
 
         [Tooltip("The dimension to map the size to")]
         public string sizeDimension;
+
+        [Tooltip("The dimension to map the shape to")]
+        public string shapeDimension;
 
         [Tooltip("The dimension that links data points for trajectories")]
         public string linkingDimension;
@@ -397,6 +404,7 @@ namespace IATK
 
                         colourDimension = string.IsNullOrEmpty(theVisualizationObject.creationConfiguration.ColourDimension) ? "Undefined" : theVisualizationObject.creationConfiguration.ColourDimension;
                         sizeDimension = string.IsNullOrEmpty(theVisualizationObject.creationConfiguration.SizeDimension) ? "Undefined" : theVisualizationObject.creationConfiguration.SizeDimension;
+                        shapeDimension = string.IsNullOrEmpty(theVisualizationObject.creationConfiguration.ShapeDimension) ? "Undefined": theVisualizationObject.creationConfiguration.ShapeDimension;
                         dimensionColour = theVisualizationObject.creationConfiguration.colourKeys;
                         colour = theVisualizationObject.creationConfiguration.colour;
 
@@ -429,6 +437,7 @@ namespace IATK
                         theVisualizationObject.creationConfiguration.Deserialize(ConfigurationFileName());
                         colourDimension = string.IsNullOrEmpty(theVisualizationObject.creationConfiguration.ColourDimension) ? "Undefined" : theVisualizationObject.creationConfiguration.ColourDimension;
                         sizeDimension = string.IsNullOrEmpty(theVisualizationObject.creationConfiguration.SizeDimension) ? "Undefined" : theVisualizationObject.creationConfiguration.SizeDimension;
+                        shapeDimension = string.IsNullOrEmpty(theVisualizationObject.creationConfiguration.ShapeDimension) ? "Undefined" : theVisualizationObject.creationConfiguration.ShapeDimension;
                         dimensionColour = theVisualizationObject.creationConfiguration.colourKeys;
                         colour = theVisualizationObject.creationConfiguration.colour;
 

@@ -104,7 +104,6 @@ namespace IATK
                 normals.Add(new Vector3());
                 uvs.Add(new Vector3());
                 uv2s.Add(new Vector3());
-                
             }
 
             return this;
@@ -132,6 +131,23 @@ namespace IATK
                 p[(int)dimension] = data[i];
                 n[(int)dimension] = data[i];
 
+                positions[i] = p;
+                normals[i] = n;
+            }
+
+            return this;
+        }
+
+        public ViewBuilder resetDataDimension(VIEW_DIMENSION dimension)
+        {
+            Debug.Assert((int)dimension < 3);
+            for (int i = 0; i < positions.Count; i++)
+            {
+                Vector3 p = positions[i];
+                Vector3 n = normals[i];
+                p[(int)dimension] = 0.0f;
+                n[(int)dimension] = 0.0f;
+                
                 positions[i] = p;
                 normals[i] = n;
             }
@@ -171,6 +187,11 @@ namespace IATK
         {
             Debug.Assert(newColours != null && newColours.Length == numberOfDataPoints);
             colours = newColours.ToList();
+            return this;
+        }
+
+        public ViewBuilder resetColors() {
+            colours = new List<Color>(numberOfDataPoints);
             return this;
         }
 
@@ -427,6 +448,47 @@ namespace IATK
             {
                 Vector3 n = uvs[i];
                 n.y = sizeArray[i];
+                uvs[i] = n;
+            }
+
+            return this;
+        }
+
+        public ViewBuilder resetSize() {
+            for (int i = 0; i < numberOfDataPoints; i++)
+            {
+                Vector3 n = new Vector3();
+                n.x = uvs[i].x;
+                n.z = uvs[i].z;
+                uvs[i] = n;
+            }
+
+            return this;
+        }
+
+        /// <summary>
+        /// maps shapes to individual points
+        /// </summary>
+        /// <param name="shapeArray"></param>
+        /// <returns></returns>
+        public ViewBuilder setShape(float[] shapeArray)
+        {
+            Debug.Assert(shapeArray != null && shapeArray.Length == numberOfDataPoints);
+            for (int i = 0; i < numberOfDataPoints; i++)
+            {
+                Vector3 n = uvs[i];
+                n.x = shapeArray[i];
+                uvs[i] = n;
+            }
+
+            return this;
+        }
+        public ViewBuilder resetShape() {
+            for (int i = 0; i < numberOfDataPoints; i++)
+            {
+                Vector3 n = new Vector3();
+                n.y = uvs[i].y;
+                n.z = uvs[i].z;
                 uvs[i] = n;
             }
 

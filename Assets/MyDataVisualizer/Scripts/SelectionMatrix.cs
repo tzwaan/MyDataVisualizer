@@ -32,14 +32,21 @@ namespace MyDataVisualizer
             Destroy(transform.parent.gameObject);
         }
 
-        void clickButton(int row, MatrixVisualizer.VIEW_DIMENSION dimension) {
+        public void clickButton(int row, MatrixVisualizer.VIEW_DIMENSION dimension) {
             List<Button> column = buttons[(int)dimension];
             Button button = column[row];
-            foreach(var _button in column) {
-                _button.GetComponent<Image>().color = Color.white;
+            Image image = button.GetComponent<Image>();
+            if (image.color == Color.red) {
+                image.color = Color.white;
+                visualizer.resetViewDimension(dimension);
             }
-            button.GetComponent<Image>().color = Color.red;
-            visualizer.setViewDimension(dataColumns[row], dimension);
+            else {
+                foreach(var _button in column) {
+                    _button.GetComponent<Image>().color = Color.white;
+                }
+                image.color = Color.red;
+                visualizer.setViewDimension(dataColumns[row], dimension);
+            }
         }
 
         public void initDataSource() {

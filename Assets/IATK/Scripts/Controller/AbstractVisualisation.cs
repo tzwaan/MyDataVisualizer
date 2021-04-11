@@ -21,7 +21,8 @@ namespace IATK
             Cubes,
             Bars,
             Spheres,
-            Arrows
+            Arrows,
+            Shape
         }
 
         public enum PropertyType
@@ -32,6 +33,7 @@ namespace IATK
             Z,
             Colour,
             Size,
+            Shape,
             GeometryType,
             LinkingDimension,
             OriginDimension,
@@ -45,6 +47,7 @@ namespace IATK
             DimensionChange,
             VisualisationType,
             SizeValues,
+            ShapeValues,
             DimensionChangeFiltering,
             VisualisationWidth,
             VisualisationHeight,
@@ -55,7 +58,8 @@ namespace IATK
         {
             VertexId,
             Size,
-            Filter
+            Filter,
+            Shape
         }
 
         public enum VisualisationTypes {
@@ -292,6 +296,14 @@ namespace IATK
                 case AbstractVisualisation.GeometryType.Arrows:
                     builder.createIndicesPointTopology(); // createIndicesLinkedTopology(dataSource[linkingDimension].Data);
                     mt = new Material(Shader.Find("Custom/VectorShader"));
+                    mt.renderQueue = 3000;
+                    mt.enableInstancing = true;
+                    return builder.updateView().
+                    apply(gameObject, mt);
+
+                case AbstractVisualisation.GeometryType.Shape:
+                    builder.createIndicesPointTopology();
+                    mt = new Material(Shader.Find("Custom/ShapeShader"));
                     mt.renderQueue = 3000;
                     mt.enableInstancing = true;
                     return builder.updateView().
