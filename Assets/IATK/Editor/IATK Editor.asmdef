@@ -1,0 +1,17 @@
+{
+    "name": "IATKEditor",
+    "references": [
+        "GUID:141a273516c6adb4182383b8b35464a7"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
