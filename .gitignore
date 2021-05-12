@@ -79,7 +79,6 @@ sysinfo.txt
 # =============== #
 # Additional SDKs #
 # =============== #
-/Assets/VRTK/
 /Assets/Oculus/
 /Assets/OvrAvatar/
 /Assets/Plugins/

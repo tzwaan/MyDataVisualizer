@@ -1,0 +1,17 @@
+{
+    "name": "VRTKExamples",
+    "references": [
+        "GUID:8fa756b17bedbcd4ea8a0d608c3c1c6e"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
